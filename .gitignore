@@ -2,6 +2,9 @@
 */target
 
 # KICAD
+# Backups
+*-backups
+
 # Temporary files
 *.000
 *.bak
@@ -16,6 +19,7 @@ _autosave-*
 *-save.pro
 *-save.kicad_pcb
 fp-info-cache
+*.lck
 /build
 
 # Netlist files (exported from Eeschema)
