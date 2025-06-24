@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 from aardvark_py import *
  
 # Aardvark abstraction
