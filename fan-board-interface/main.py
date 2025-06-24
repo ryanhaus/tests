@@ -16,8 +16,8 @@ def i2c_deinit():
 def i2c_write(addr, data):
 	aa_i2c_write(handle, addr, AA_I2C_NO_FLAGS, array('B', data))
  
-def i2c_read(addr, len):
-	(_count, data) = aa_i2c_read(handle, addr, AA_I2C_NO_FLAGS, len)
+def i2c_read(addr, n):
+	(_count, data) = aa_i2c_read(handle, addr, AA_I2C_NO_FLAGS, n)
 	return data
 # End Aardvark abstraction
  
@@ -27,9 +27,9 @@ def smbus_write(addr, reg, data):
 	data.insert(0, reg)
 	i2c_write(addr, data)
  
-def smbus_read(addr, reg, len):
+def smbus_read(addr, reg, n):
 	i2c_write(addr, [reg])
-	return i2c_read(addr, len)
+	return i2c_read(addr, n)
 # End SMBus
  
 # EEPROM
