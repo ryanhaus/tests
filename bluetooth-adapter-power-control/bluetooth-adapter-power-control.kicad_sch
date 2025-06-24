@@ -2327,8 +2327,8 @@
 			)
 		)
 	)
-	(global_label "BTN_SHORT"
-		(shape input)
+	(global_label "IGNITION_IN"
+		(shape output)
 		(at 236.22 107.95 180)
 		(fields_autoplaced yes)
 		(effects
@@ -2337,31 +2337,9 @@
 			)
 			(justify right)
 		)
-		(uuid "25fbe664-b8e9-4029-a5f2-7f091d362671")
+		(uuid "40fdab2a-60e5-4a83-b060-9597731a2e35")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 222.591 107.95 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-				(hide yes)
-			)
-		)
-	)
-	(global_label "BT_LED_IN"
-		(shape output)
-		(at 236.22 110.49 180)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "4012fba3-2c2f-4fc6-90cd-fc8f35dfdf03")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 223.6796 110.49 0)
+			(at 222.2884 107.95 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2569,7 +2547,7 @@
 			)
 		)
 	)
-	(global_label "IGNITION_IN"
+	(global_label "BT_LED_IN"
 		(shape output)
 		(at 236.22 105.41 180)
 		(fields_autoplaced yes)
@@ -2579,9 +2557,9 @@
 			)
 			(justify right)
 		)
-		(uuid "b269a071-0c08-40d3-b6fc-07aea2006167")
+		(uuid "a6c1485d-01b4-418c-b177-7e1704f065ed")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 222.2884 105.41 0)
+			(at 223.6796 105.41 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2626,6 +2604,50 @@
 		(uuid "d95f86e6-33bc-4adb-b949-2cc5f9e8b534")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
 			(at 33.3382 149.86 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "BTN_SHORT"
+		(shape input)
+		(at 236.22 110.49 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "e3466f11-d02c-472b-9ffa-0ef46d6fac96")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 222.591 110.49 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "BT_LED_IN"
+		(shape output)
+		(at 236.22 105.41 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "e94210b6-ea54-4343-b1c5-b593f076e584")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 223.6796 105.41 0)
 			(effects
 				(font
 					(size 1.27 1.27)
