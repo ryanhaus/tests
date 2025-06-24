@@ -2289,28 +2289,6 @@
 			)
 		)
 	)
-	(global_label "CAR_ON"
-		(shape output)
-		(at 236.22 105.41 180)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "51b6cd9c-a88a-465e-826b-285159d018f0")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 225.9776 105.41 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-				(hide yes)
-			)
-		)
-	)
 	(global_label "BTN1"
 		(shape input)
 		(at 60.96 96.52 0)
@@ -2461,6 +2439,28 @@
 					(size 1.27 1.27)
 				)
 				(justify left)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "IGNITION_IN"
+		(shape output)
+		(at 236.22 105.41 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "b269a071-0c08-40d3-b6fc-07aea2006167")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 222.2884 105.41 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
 				(hide yes)
 			)
 		)
