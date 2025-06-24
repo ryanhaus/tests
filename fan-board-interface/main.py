@@ -35,9 +35,24 @@ def smbus_read(addr, reg, n):
 # EEPROM
 # Requires I2C to be setup
 def eeprom_write(i2c_addr, addr, data):
-	data.insert(0, addr & 0xFF)
-	data.insert(0, (addr & 0xFF) >> 8)
+    assert(len(data) <= 64)
+
+    addr_low = addr & 0xFF
+    addr_high = (addr & 0xFF00) >> 8
+
+	data.insert(0, addr_low)
+	data.insert(0, addr_high)
 	i2c_write(i2c_addr, data)
+
+def eeprom_read_random(i2c_addr, addr, n):
+    addr_low = addr & 0xFF
+    addr_high = (addr & 0xFF00) >> 8
+
+    i2c_write(i2c_addr, [addr_high, addr_low])
+    return i2c_read(i2c_addr, n)
+
+def eeprom_read_cur(i2c_addr, n):
+    return i2c_read(i2c_addr, n)
 # End EEPROM
  
 def main():
