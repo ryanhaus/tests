@@ -349,6 +349,10 @@ def main():
     mfr_mode = fanctrl_read_as_val(FANCTRL_MFR_MODE)
     print(f"Manufacturer mode: 0x{mfr_mode:04X}")
     
+    pos = fanctrl_read_as_val(FANCTRL_MFR_TIME_COUNT)
+    pos_days = pos / (24 * 60 * 60)
+    print(f"Power on time: {pos} seconds ({pos_days:.2f} days)")
+    
     fanctrl_write(FANCTRL_MFR_MODE, 0x007F)
     
     # Vout scaling
