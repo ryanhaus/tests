@@ -370,7 +370,8 @@ def main():
         if page in [0, 1, 2, 3]:
             fanctrl_write(FANCTRL_MFR_FAN_CONFIG, 0xE380)
             fanctrl_write(FANCTRL_FAN_CONFIG_1_2, 0x90)
-            fanctrl_set_pwm(0.5)
+            
+            fanctrl_set_pwm(0.5 if page >> 1 == 0 else 0.25)
             
             fan_speed = fanctrl_read_as_val(FANCTRL_READ_FAN_SPEED_1)
             print(f"Fan speed: {fan_speed} RPM")
