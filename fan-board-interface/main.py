@@ -313,7 +313,11 @@ def main():
     
     print("Reading many values from EEPROM 0x1000...")
     vals = eeprom_read_random(0x1000, 0x200)
-    print(vals)
+    
+    for (i, val) in enumerate(vals):
+        assert(val == i & 0xFF)
+        
+    print("OK")
  
     # Fan Controller
     #fanctrl_write(FANCTRL_RESTORE_DEFAULT_ALL)
