@@ -23,7 +23,7 @@ def i2c_read(addr, n_bytes, flags=AA_I2C_NO_FLAGS):
     (_count, data) = aa_i2c_read(handle, addr, flags, n_bytes)
     data = list(data)
     
-    return data if n_bytes > 1 else data[0]
+    return data
 # End Aardvark abstraction
 
 
@@ -299,7 +299,7 @@ def main():
     print("Random reads:")
     
     for i in range(4):
-        val = eeprom_read_random(i, 1)
+        val = eeprom_read_random(i, 1)[0]
         print(f"0x{i:04X}: 0x{val:02X}")
         
     print("Multiple byte read:")
@@ -318,17 +318,16 @@ def main():
     # Fan Controller
     #fanctrl_write(FANCTRL_RESTORE_DEFAULT_ALL)
     #sleep(0.25)
-    
     print("Reading from fan controller")
     fanctrl_set_page(0)    
-    status = fanctrl_read(FANCTRL_STATUS_BYTE)
+    status = fanctrl_read_as_val(FANCTRL_STATUS_BYTE)
     status_word = fanctrl_read_as_val(FANCTRL_STATUS_WORD)
     print(f"Status: 0x{status:02X}/0x{status_word:04X}")
     
-    mfr_id = fanctrl_read(FANCTRL_MFR_ID)
+    mfr_id = fanctrl_read_as_val(FANCTRL_MFR_ID)
     print(f"Manufacturer ID: 0x{mfr_id:02X}")
     
-    mfr_model = fanctrl_read(FANCTRL_MFR_MODEL)
+    mfr_model = fanctrl_read_as_val(FANCTRL_MFR_MODEL)
     print(f"Manufacturer model: 0x{mfr_model:02X}")
     
     mfr_revision = fanctrl_read_as_val(FANCTRL_MFR_REVISION)
