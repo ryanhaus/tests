@@ -376,6 +376,7 @@ def main():
             fan_speed = fanctrl_read_as_val(FANCTRL_READ_FAN_SPEED_1)
             print(f"Fan speed: {fan_speed} RPM")
             
+            # PWM is read in units of 0.01%
             fan_pwm = fanctrl_read_as_val(FANCTRL_MFR_READ_FAN_PWM) / 100
             print(f"Fan PWM: {fan_pwm}%")
             
@@ -386,16 +387,15 @@ def main():
         if page in [6, 7, 12]:
             fanctrl_write(FANCTRL_MFR_TEMP_SENSOR_CONFIG, 0x8000)
             
+            # temp is read in units of 0.01 deg C
             temperature = fanctrl_read_as_val(FANCTRL_READ_TEMPERATURE_1) / 100
             print(f"Temperature: {temperature} deg C")
             
         # ADC pages
         if page in [20, 21]:
+            # voltage is read in units of mV
             voltage = fanctrl_read_as_val(FANCTRL_READ_VOUT) / 1000
             print(f"Voltage: {voltage} V")
-            
-            vout = fanctrl_read_as_val(FANCTRL_READ_VOUT) / 1000
-            print(f"Vout: {vout} V")
  
     i2c_deinit()
  
