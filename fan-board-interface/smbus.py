@@ -1,4 +1,5 @@
 from i2c_aardvark import *
+from util import *
 
 def smbus_write(addr, reg, data=[], n_bytes=-1):
     if not isinstance(data, list):
