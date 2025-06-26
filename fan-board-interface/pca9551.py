@@ -11,7 +11,7 @@ LEDCTRL_LS0 = 0x05
 LEDCTRL_LS1 = 0x06
 
 def ledctrl_write(reg, data):
-    smbus_write(LEDCTRL_ADDR, reg, [data])
+    smbus_write(LEDCTRL_ADDR, reg, data)
     
 def ledctrl_read(reg):
     return smbus_read(LEDCTRL_ADDR, reg, 1)

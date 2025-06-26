@@ -7,11 +7,15 @@ from max31785 import *
 def main():
     i2c_init()
  
+
+
     # LED Controller (PCA9551)
     print("Making LED controller blink...")
     ledctrl_write(LEDCTRL_LS0, 0x0A)
     ledctrl_write(LEDCTRL_PSC0, 0x10)
  
+
+
     # EEPROM
     print("Writing to EEPROM 0x0000...")
     eeprom_write(0x0000, [0x12, 0x34, 0x56, 0x78])
@@ -38,8 +42,10 @@ def main():
     for (i, val) in enumerate(vals):
         assert(val == i & 0xFF)
         
-    print("OK")
+    print("All values read OK")
  
+
+
     # Fan Controller
     #fanctrl_write(FANCTRL_RESTORE_DEFAULT_ALL)
     #sleep(0.25)

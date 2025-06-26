@@ -113,10 +113,13 @@ FANCTRL_ACCESS = {
 
 
 
+# Asserts that 'reg' is ok to be read from/written to (depending on the 'read'
+# and 'write' parameters) in the current page.
 current_page = 0
 def assert_page_ok(reg, write=False, read=False):
     (readable_pages, writeable_pages) = FANCTRL_ACCESS[reg]
     ranges = [ range(0, 6), range(6, 17), range(17, 23), [255] ]
+
     for (i, r) in enumerate(ranges):
         if current_page in r:
             if (read):
@@ -124,30 +127,36 @@ def assert_page_ok(reg, write=False, read=False):
             if (write):
                 assert(writeable_pages & (1 << i) > 0)
 
+# Writes a value/executes a command.
 def fanctrl_write(command, data=[]):
     (reg, n_bytes) = command
     assert_page_ok(reg, write=True)
     
     smbus_write(FANCTRL_ADDR, reg, data, n_bytes)
 
+# Reads a value from a command/register.
 def fanctrl_read(command):
     (reg, n_bytes) = command
     assert_page_ok(reg, read=True)
     
     return smbus_read(FANCTRL_ADDR, reg, n_bytes)
     
+# Reads a value and converts it into an integer value.
 def fanctrl_read_as_val(command):
     return join_as_val(fanctrl_read(command))
     
+# Reads a value and converts it into a string (UTF-8).
 def fanctrl_read_as_str(command):
     return join_as_string(fanctrl_read(command))
     
+# Sets the current page.
 def fanctrl_set_page(page):
     global current_page
     current_page = page
-    fanctrl_write(FANCTRL_PAGE, [page & 0xFF])
+    fanctrl_write(FANCTRL_PAGE, page & 0xFF)
     
+# Sets the fan's PWM.
 def fanctrl_set_pwm(pwm):
     assert(pwm >= 0 and pwm <= 1)
     pwm_val = int(round(0x2710 * pwm))
-    fanctrl_write(FANCTRL_FAN_COMMAND_1, split_as_bytes(pwm_val, 2))
+    fanctrl_write(FANCTRL_FAN_COMMAND_1, pwm_val)

@@ -6,6 +6,9 @@ from time import sleep
 EEPROM_ADDR = 0x54
 T_WR = 0.01 # EEPROM write time
 
+# Writes an arbitrarily long amount of data to the EEPROM. If 'data' is longer
+# than 64 bytes, it will be written in pages of 64. 'data' can also be of type
+# int, in which case the n_bytes parameter is also required.
 def eeprom_write(addr, data=[], n_bytes=-1):
     if not isinstance(data, list):
         assert(n_bytes > 0)
@@ -28,6 +31,7 @@ def eeprom_write(addr, data=[], n_bytes=-1):
     
     sleep(T_WR)
 
+# Reads n bytes from a given address.
 def eeprom_read_random(addr, n):
     addr_low = addr & 0xFF
     addr_high = (addr & 0xFF00) >> 8
@@ -35,5 +39,6 @@ def eeprom_read_random(addr, n):
     i2c_write(EEPROM_ADDR, [addr_high, addr_low], flags=AA_I2C_NO_STOP)
     return i2c_read(EEPROM_ADDR, n)
 
+# Reads n bytes from the current address pointer.
 def eeprom_read_cur(n):
     return i2c_read(EEPROM_ADDR, n)
