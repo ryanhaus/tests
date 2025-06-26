@@ -76,7 +76,7 @@ def eeprom_write(addr, data=[], n_bytes=-1):
         data = split_as_bytes(data, n_bytes)
         
     if len(data) > 64:
-        eeprom_write(addr, data[0:63])
+        eeprom_write(addr, data[0:64])
         eeprom_write(addr + 64, data[64:])
         return
     
