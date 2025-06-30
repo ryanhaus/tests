@@ -12,11 +12,25 @@ def i2c_init():
 def i2c_deinit():
     aa_close(handle)
  
-def i2c_write(addr, data, flags=AA_I2C_NO_FLAGS):
+def i2c_write(addr, data, **kwargs):
+    flags = aardvark_process_flags(**kwargs)
     aa_i2c_write(handle, addr, flags, array('B', data))
  
-def i2c_read(addr, n_bytes, flags=AA_I2C_NO_FLAGS):
+def i2c_read(addr, n_bytes, **kwargs):
+    flags = aardvark_process_flags(**kwargs)
     (_count, data) = aa_i2c_read(handle, addr, flags, n_bytes)
     data = list(data)
     
     return data
+
+def aardvark_process_flags(**kwargs):
+    flags = AA_I2C_NO_FLAGS
+
+    for key, val in kwargs.items():
+        match key:
+            case "nostop":
+                if val:
+                    flags |= AA_I2C_NO_STOP
+
+            case _:
+                raise Exception("Invalid Aardvark flag")

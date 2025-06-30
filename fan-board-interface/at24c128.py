@@ -36,7 +36,7 @@ def eeprom_read_random(addr, n):
     addr_low = addr & 0xFF
     addr_high = (addr & 0xFF00) >> 8
 
-    i2c_write(EEPROM_ADDR, [addr_high, addr_low], flags=AA_I2C_NO_STOP)
+    i2c_write(EEPROM_ADDR, [addr_high, addr_low], nostop=True)
     return i2c_read(EEPROM_ADDR, n)
 
 # Reads n bytes from the current address pointer.
