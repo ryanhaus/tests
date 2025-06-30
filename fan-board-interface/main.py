@@ -98,7 +98,7 @@ def main():
             fanctrl_write(FANCTRL_MFR_FAN_CONFIG, 0xE380)
             fanctrl_write(FANCTRL_FAN_CONFIG_1_2, 0x90)
             
-            fanctrl_set_pwm(0.5 if page >> 1 == 0 else 0.25)
+            fanctrl_set_pwm(0.25)
             
             fan_speed = fanctrl_read_as_val(FANCTRL_READ_FAN_SPEED_1)
             print(f"Fan speed: {fan_speed} RPM")
@@ -123,6 +123,60 @@ def main():
             # voltage is read in units of mV
             voltage = fanctrl_read_as_val(FANCTRL_READ_VOUT) / 1000
             print(f"Voltage: {voltage} V")
+    
+    while True:
+        input_str = input("Enter command (? for help): ")
+        
+        if input_str == "?":
+            print("commands:")
+            print("?                display this menu")
+            print("set_pwm          sets the fan PWMs")
+            print("read_rpm         reads the fan RPMs")
+            print("read_rpm_avg     reads the fan RPMs averaged over a given time")
+            print("exit             exits program")
+        
+        elif input_str == "set_pwm":
+            pwm = float(input("Enter PWM (%): ")) / 100.0
+            
+            assert(pwm >= 0.0 and pwm <= 1.0)
+            
+            for page in [0, 1, 2, 3]:
+                fanctrl_set_page(page)
+                fanctrl_set_pwm(pwm)
+        
+        elif input_str == "read_rpm":
+            for page in [0, 1, 2, 3]:
+                fanctrl_set_page(page)
+                rpm = fanctrl_read_as_val(FANCTRL_READ_FAN_SPEED_1)
+                
+                print(f"Page {page}: {rpm} RPM")
+        
+        elif input_str == "read_rpm_avg":
+            sample_delay = float(input("Enter sample delay (s): "))
+            n_samples = int(input("Enter number of samples: "))
+            
+            rpm_totals = [0, 0, 0, 0]
+            
+            for i in range(n_samples):
+                for page in [0, 1, 2, 3]:
+                    fanctrl_set_page(page)
+                    rpm = fanctrl_read_as_val(FANCTRL_READ_FAN_SPEED_1)
+                    rpm_totals[page] += rpm
+                    
+                sleep(sample_delay)
+                
+            for page in [0, 1, 2, 3]:
+                avg_rpm = rpm_totals[page] / n_samples
+                print(f"Page {page}: {avg_rpm} RPM")
+            
+        elif input_str == "exit":
+            break
+            
+        else:
+            print("Invalid command")
+        
+        print()
+            
  
     i2c_deinit()
  
