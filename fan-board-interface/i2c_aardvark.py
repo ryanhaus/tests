@@ -34,3 +34,5 @@ def aardvark_process_flags(**kwargs):
 
             case _:
                 raise Exception("Invalid Aardvark flag")
+
+    return flags
