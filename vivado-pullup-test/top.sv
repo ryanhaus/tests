@@ -6,7 +6,7 @@ module top(
     integer counter;
     logic test_en;
     
-    assign test = test_en ? 'b1 : 'bz;
+    assign test = test_en ? 'b0 : 'bz;
     
     always_ff @(posedge clk) begin
         if (counter >= 'h100000) begin
