@@ -1,0 +1,3 @@
+[submodule "updi-phy-test/updi-fpga"]
+	path = updi-phy-test/updi-fpga
+	url = http://github.com/ryanhaus/updi-fpga
