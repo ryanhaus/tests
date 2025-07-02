@@ -12,8 +12,8 @@ module top(
 	localparam UART_CLK_DIV = CLK_FREQ / UART_CLK_FREQ;
 
 	logic [7:0] uart_tx_fifo_data, uart_rx_fifo_data;
-	logic uart_tx_fifo_wr_en, uart_tx_fifo_full,
-		uart_rx_fifo_rd_en, uart_rx_fifo_empty, rx_error,
+	logic uart_tx_fifo_wr_en, uart_tx_fifo_full, uart_tx_fifo_almost_full,
+		uart_rx_fifo_rd_en, uart_rx_fifo_empty, uart_rx_fifo_almost_empty, rx_error,
 		double_break_start, double_break_busy, double_break_done;
 
 	updi_phy #(
@@ -27,10 +27,12 @@ module top(
 		.uart_tx_fifo_data(uart_tx_fifo_data),
 		.uart_tx_fifo_wr_en(uart_tx_fifo_wr_en),
 		.uart_tx_fifo_full(uart_tx_fifo_full),
+		.uart_tx_fifo_almost_full(uart_tx_fifo_almost_full),
 
 		.uart_rx_fifo_data(uart_rx_fifo_data),
 		.uart_rx_fifo_rd_en(uart_rx_fifo_rd_en),
 		.uart_rx_fifo_empty(uart_rx_fifo_empty),
+		.uart_rx_fifo_almost_empty(uart_rx_fifo_almost_empty),
 		.rx_error(rx_error),
 
 		.double_break_start(double_break_start),
@@ -43,20 +45,15 @@ module top(
 	logic [7:0] counter;
 
 	always_ff @(posedge clk) begin
+		uart_tx_fifo_wr_en <= 'b0;
+
 		if (rst) begin
 			counter <= 'b0;
 		end
-		else if (!uart_tx_fifo_full) begin
+		else if (!uart_tx_fifo_almost_full) begin
+			uart_tx_fifo_data <= counter;
+			uart_tx_fifo_wr_en <= 'b1;
 			counter <= counter + 'b1;
-		end
-	end
-
-	always_comb begin
-		uart_tx_fifo_wr_en = 'b0;
-
-		if (!uart_tx_fifo_full) begin
-			uart_tx_fifo_data = counter;
-			uart_tx_fifo_wr_en = 'b1;
 		end
 	end
 
