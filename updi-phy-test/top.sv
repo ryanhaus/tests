@@ -40,4 +40,24 @@ module top(
 		.updi(updi)
 	);
 
+	logic [7:0] counter;
+
+	always_ff @(posedge clk) begin
+		if (rst) begin
+			counter <= 'b0;
+		end
+		else if (!uart_tx_fifo_full) begin
+			counter <= counter + 'b1;
+		end
+	end
+
+	always_comb begin
+		uart_tx_fifo_wr_en = 'b0;
+
+		if (!uart_tx_fifo_full) begin
+			uart_tx_fifo_data = counter;
+			uart_tx_fifo_wr_en = 'b1;
+		end
+	end
+
 endmodule
